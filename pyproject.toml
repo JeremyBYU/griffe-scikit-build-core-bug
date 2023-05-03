@@ -1,0 +1,21 @@
+[project]
+name = "griffdemo"
+version = "0.0.1"
+description="Demo griffe with scikit-build-core"
+readme = "README.md"
+authors = [
+  { name = "Jeremy Castagno", email = "jeremybyu@gmail.com" },
+]
+requires-python = ">=3.9"
+dependencies = [
+  "griffe",
+]
+
+[build-system]
+requires = [
+    "scikit-build-core>=0.3.3",
+    "setuptools",
+    "pybind11",
+]
+build-backend = "scikit_build_core.build"
+# build-backend = "scikit_build_core.setuptools.build_meta"
