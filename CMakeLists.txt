@@ -5,9 +5,9 @@ project(
   VERSION "${SKBUILD_PROJECT_VERSION}")
 
 find_package(pybind11 CONFIG REQUIRED)
-pybind11_add_module(cmake_example src/main.cpp)
+pybind11_add_module(_core src/main.cpp)
 
-target_compile_definitions(cmake_example
+target_compile_definitions(_core
                            PRIVATE VERSION_INFO=${PROJECT_VERSION})
 
-install(TARGETS cmake_example LIBRARY DESTINATION .)
+install(TARGETS _core LIBRARY DESTINATION griffedemo)

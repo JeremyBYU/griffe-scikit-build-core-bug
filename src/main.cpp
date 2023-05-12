@@ -10,8 +10,10 @@ int add(int i, int j) {
 namespace py = pybind11;
 
 PYBIND11_MODULE(_core, m) {
+    py::options options;
+    options.disable_function_signatures();
     m.doc() = R"pbdoc(
-        A C++ extension module in pyhthon
+        A C++ extension module in python
     )pbdoc";
 
     m.def("add", &add, R"pbdoc(

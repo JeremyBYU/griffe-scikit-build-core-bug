@@ -5,169 +5,42 @@ This repository demonstrates a bug with [Griffe](https://github.com/mkdocstrings
 
 ## Steps to reproduce
 
-
 1. Clone this repo and change into its directory
 2. Create some form of a virtual environment
     1. I use conda: `conda create --name bug python=3.10; conda activate bug`
 
-**Demo Local Install (Works)**   
-
-1. `pip install .`
-2. `griffe dump griffedemo`
-
-Outputs:
-
-```json
-❯ griffe dump griffedemo
-{
-  "griffedemo": {
-    "kind": "module",
-    "name": "griffedemo",
-    "labels": [],
-    "members": [
-      {
-        "kind": "alias",
-        "name": "__doc__",
-        "target_path": "griffedemo._core.__doc__",
-        "lineno": 1,
-        "endlineno": 1
-      },
-      {
-        "kind": "alias",
-        "name": "__version__",
-        "target_path": "griffedemo._core.__version__",
-        "lineno": 1,
-        "endlineno": 1
-      },
-      {
-        "kind": "alias",
-        "name": "add",
-        "target_path": "griffedemo._core.add",
-        "lineno": 1,
-        "endlineno": 1
-      },
-      {
-        "kind": "alias",
-        "name": "subtract",
-        "target_path": "griffedemo._core.subtract",
-        "lineno": 1,
-        "endlineno": 1
-      },
-      {
-        "kind": "attribute",
-        "name": "__all__",
-        "lineno": 3,
-        "endlineno": 3,
-        "labels": [
-          "module-attribute"
-        ],
-        "members": [],
-        "value": "['__doc__', '__version__', 'add', 'subtract']"
-      },
-      {
-        "kind": "module",
-        "name": "purepython",
-        "labels": [],
-        "members": [
-          {
-            "kind": "alias",
-            "name": "math",
-            "target_path": "math",
-            "lineno": 1,
-            "endlineno": 1
-          },
-          {
-            "kind": "alias",
-            "name": "Tuple",
-            "target_path": "typing.Tuple",
-            "lineno": 2,
-            "endlineno": 2
-          },
-          {
-            "kind": "function",
-            "name": "solve_quadratic",
-            "lineno": 4,
-            "endlineno": 18,
-            "docstring": {
-              "value": "Will solve the quadratic equation ax^2 + bx + c = 0\n\nArgs:\n    a (float): x^2 constant\n    b (float): x constant\n    c (float): constant\n\nReturns:\n    Tuple[float, float]: The roots of x",
-              "lineno": 5,
-              "endlineno": 14
-            },
-            "labels": [],
-            "members": [],
-            "decorators": [],
-            "parameters": [
-              {
-                "name": "a",
-                "annotation": {
-                  "source": "float",
-                  "full": "float"
-                },
-                "kind": "positional or keyword",
-                "default": null
-              },
-              {
-                "name": "b",
-                "annotation": {
-                  "source": "float",
-                  "full": "float"
-                },
-                "kind": "positional or keyword",
-                "default": null
-              },
-              {
-                "name": "c",
-                "annotation": {
-                  "source": "float",
-                  "full": "float"
-                },
-                "kind": "positional or keyword",
-                "default": null
-              }
-            ],
-            "returns": [
-              {
-                "source": "Tuple",
-                "full": "typing.Tuple"
-              },
-              "[",
-              [
-                {
-                  "source": "float",
-                  "full": "float"
-                },
-                ", ",
-                {
-                  "source": "float",
-                  "full": "float"
-                }
-              ],
-              "]"
-            ]
-          }
-        ],
-        "filepath": "C:\\Users\\Jerem\\scoop\\apps\\mambaforge\\current\\lib\\site-packages\\griffedemo\\purepython\\__init__.py"
-      }
-    ],
-    "filepath": "C:\\Users\\Jerem\\scoop\\apps\\mambaforge\\current\\lib\\site-packages\\griffedemo\\__init__.py"
-  }
-}
-```
-
-**Demo Editable Install (Doesn't Work)**
+**Demo Editable Install (Does Not Work)**   
 
 1. `pip install -e .`
-2. `griffe dump griffedemo`
+2. `mkdocs serve`
 
-Output:
+Error output:
 
+```bash
+❯ mkdocs serve
+INFO     -  Building documentation...
+INFO     -  Cleaning site directory
+ERROR    -  mkdocstrings: griffedemo._core could not be found
+ERROR    -  Error reading page 'compiled.md':
+ERROR    -  Could not collect 'griffedemo._core'
+Aborted with a BuildError!
 ```
-❯ griffe dump griffedemo
-INFO       Loading package griffedemo
-ERROR      Could not find package griffedemo: No module named 'griffedemo._core'
-INFO       Finished loading packages
-{}
+
+Verify it is importable:
+
+```python
+❯ python
+Python 3.10.10 | packaged by conda-forge | (main, Mar 24 2023, 20:00:38) [MSC v.1934 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import griffedemo._core
 ```
+
+**Demo Local Install (No Issues)**  
+
+1. `pip install .`
+2. `mkdocs serve`
+
+Navigate to a working website!
 
 ## The problem?
 
@@ -309,7 +182,7 @@ def install(
     )
 
 
-install({'griffedemo': 'C:\\Users\\Jerem\\Documents\\Springfield\\Research\\griffe-scikit-build-core-bug\\src\\griffedemo\\__init__.py', 'griffedemo.purepython': 'C:\\Users\\Jerem\\Documents\\Springfield\\Research\\griffe-scikit-build-core-bug\\src\\griffedemo\\purepython\\__init__.py'}, {'cmake_example': 'cmake_example.cp310-win_amd64.pyd'}, None, False, True)
+install({'griffedemo': 'C:\\Users\\Jerem\\Documents\\Springfield\\Research\\griffe-scikit-build-core-bug\\src\\griffedemo\\__init__.py', 'griffedemo.purepython': 'C:\\Users\\Jerem\\Documents\\Springfield\\Research\\griffe-scikit-build-core-bug\\src\\griffedemo\\purepython\\__init__.py'}, {'griffedemo._core': 'griffedemo\\_core.cp310-win_amd64.pyd'}, None, False, True)
 
 
 ```

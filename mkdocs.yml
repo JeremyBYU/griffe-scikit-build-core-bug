@@ -1,0 +1,17 @@
+site_name: My Docs
+
+nav:
+  - Home: index.md
+  - CompiledC++: compiled.md
+  - PurePython: purepython.md
+
+plugins:
+- mkdocstrings:
+    handlers:
+      python:
+        options:
+          docstring_style: google
+          docstring_options:
+            ignore_init_summary: yes
+          merge_init_into_class: yes
+          show_submodules: no
