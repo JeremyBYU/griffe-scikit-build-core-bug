@@ -186,3 +186,9 @@ install({'griffedemo': 'C:\\Users\\Jerem\\Documents\\Springfield\\Research\\grif
 
 
 ```
+
+## Solution?
+
+I can provide a [Python stub file](https://mypy.readthedocs.io/en/stable/stubs.html) that describes the public interface for the Python C++ extension. The stub file will be named `_core.pyi` and will provide documentation for the compiled module `_core.pyd`.  Note that there **are** docstrings already in the compiled module `_core.pyd`. However, I would like griffe to use the Python stub file for all documentation generation of the compiled module. An advantage of this is that we can guarantee the `.pyi` file will be alongside the pure Python packages wherever it has been installed (site_pacakges or project directory in editable install).
+
+As of now, griffe is still not correctly using the stub file for *both* editable and local install.
