@@ -9,7 +9,7 @@ authors = [
 requires-python = ">=3.9"
 dependencies = [
   "mkdocstrings[python]",
-  "griffe>=0.27.5",
+  "griffe>=0.28.0",
 ]
 
 [build-system]
